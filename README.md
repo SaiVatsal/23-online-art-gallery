@@ -1,64 +1,69 @@
 # Lumina Online Art & Auction Gallery
 
-> **Project #23 — Full-Stack Web Application**
-> **Student Author:** SaiVatsal
-> **Roll / College ID:** 2500040224
-> **Architecture:** Clean Full-Stack (Node.js + Express REST API + Tailwind CSS + Responsive UI)
+A coursework prototype built by SaiVatsal with Node.js, Express, and a browser interface. This repository is one of a series of domain-specific CRUD demonstrations.
 
----
+## What is implemented
 
-## 📌 Domain & Problem Overview
-Full-stack production-style application for Lumina Online Art & Auction Gallery. Built with Express backend REST APIs, responsive modern UI, and data validation.
+- List, search, create, update, and delete records through an Express API.
+- A browser interface served from `public/`.
+- Seed data and local JSON-file storage in `data/db.json`.
+- Demonstration login and role-selection endpoints.
 
-- **Domain Category:** Art & Auctions
-- **Primary Entity:** `Artwork Masterpiece`
-- **Secondary Entity:** `Auction Live Bids`
-- **Verification Status:** 100% Tested & Fully Operational
+## Run locally
 
----
-
-## 🚀 Key Features & Implementation
-1. **Complete RESTful CRUD API:**
-   - `GET /api/artworks` — List & search records with multi-field queries.
-   - `GET /api/artworks/:id` — Retrieve detailed entity record.
-   - `POST /api/artworks` — Create new validated entity with auto-timestamps.
-   - `PUT /api/artworks/:id` — Modify existing record with verification.
-   - `DELETE /api/artworks/:id` — Remove entity from persistent storage.
-   - `GET /api/activityRecords` — Secondary domain service integration.
-   - `GET /api/stats` — Live KPI calculation endpoint.
-   - `GET /api/health` — Service health check and verification endpoint.
-   - `POST /api/auth/login` — User authentication and JWT token issuance.
-   - `GET /api/auth/me` — Active session claims and permissions inspection.
-   - `GET /api/auth/users` — Available IAM personas and clearance matrices.
-
-2. **Human-Designed Production UI:**
-   - Multi-tab layout (Overview & Metrics, Data Explorer, Live Operations, Interactive API Console, Viva Blueprint, Access & IAM Portal).
-   - Identity & Access Management (IAM) Portal with 1-click persona switching (Lead Admin, Specialist, Evaluator, Guest).
-   - Live JWT session token generator and decoded claims payload visualizer.
-   - Real-time interactive Chart.js visualizations (Categorical Distribution and Throughput Velocity).
-   - Real-time debounced search, column sorting, and CSV/JSON data exports.
-   - Slide-over inspection drawer for deep record exploration.
-   - Modal-driven CRUD forms with client-side validation.
-   - Dual-theme engine (Dark / Light mode) with localStorage persistence.
-   - Web Audio API haptic feedback and toast alerts.
-   - Prominent student identification badge: **Done By SaiVatsal 2500040224**.
-
----
-
-## 🛠️ How to Run & Test
+Install Node.js and npm, then:
 
 ```bash
-# 1. Install dependencies
+git clone https://github.com/SaiVatsal/23-online-art-gallery.git
+cd 23-online-art-gallery
 npm install
-
-# 2. Start the production server
 npm start
+```
 
-# 3. Run automated tests
+Open [localhost:3000](http://localhost:3000). Set the `PORT` environment variable to use another port.
+
+## Test
+
+```bash
 npm test
 ```
 
-Access the live web application at: `http://localhost:3000`
+The smoke tests start a local server on an available port and use a temporary copy of the seed data. They check health, the demo authentication response, and a create/read/update/delete cycle. A failed assertion exits with a nonzero status. Passing these checks does not establish complete coverage or production readiness.
 
----
-*Created with 100% dedication by SaiVatsal (2500040224).*
+## API routes
+
+| Method | Route |
+| --- | --- |
+| GET | `/api/health` |
+| GET | `/api/stats` |
+| GET | `/api/artworks` |
+| GET | `/api/artworks/:id` |
+| POST | `/api/artworks` |
+| PUT | `/api/artworks/:id` |
+| DELETE | `/api/artworks/:id` |
+| GET | `/api/activityRecords` |
+| POST | `/api/activityRecords` |
+| POST | `/api/auth/login` |
+| GET | `/api/auth/me` |
+| GET | `/api/auth/users` |
+| POST | `/api/auth/logout` |
+
+## Project files
+
+| File | Purpose |
+| --- | --- |
+| `server.js` | Express routes and JSON storage |
+| `public/index.html` | Browser interface |
+| `data/db.json` | Local seed data |
+| `api/index.js` | Serverless entry point |
+| `vercel.json` | Deployment configuration |
+| `test.js` | API smoke tests |
+
+## Prototype limitations
+
+- **Authentication is simulated.** The login endpoint does not validate a password; its token is a prefixed Base64 payload, not a signed JWT. The displayed roles do not enforce API authorization.
+- Request bodies are merged into records without a complete validation schema.
+- Local JSON storage does not provide transactions or safe concurrent writes. On Vercel, writes use temporary `/tmp` storage and are not durable.
+- A domain-themed interface is not evidence of an integrated payment provider, delivery service, external database, or other live service.
+- Use synthetic data for demonstrations. Real deployments need authentication, authorization, validation, durable storage, and additional testing.
+
